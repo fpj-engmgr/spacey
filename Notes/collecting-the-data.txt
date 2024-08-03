@@ -1,0 +1,14 @@
+SpaceX REST API
+- URL: https://api.spacexdata.com/v4/
+    - endpoints
+        api.spacexdata.com/v4/capsules
+        api.spacexdata.com/v4/cores 
+        api.spacexdata.com/v4/launches/past 
+
+response = requests.get(url)
+
+response.json()
+data = pd.json_normalize(response.json())
+
+Web scraping with BeautifulSoup
+
