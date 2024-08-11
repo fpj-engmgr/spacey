@@ -69,7 +69,9 @@ print("Tuned hyperparameters :(best parameters) ",logreg_cv.best_params_)
 print("Accuracy :",logreg_cv.best_score_)
 
 # Calculate the accuracy on the test data using the method score
-print("LR\nTest accuracy: ", logreg_cv.score(X_test, Y_test))
+acc_logreg_test_data = logreg_cv.score(X_test, Y_test)
+print("Accuracy on test data :", acc_logreg_test_data)
+
 # Let's look at the confusion matrix
 yhat = logreg_cv.predict(X_test)
 plot_confusion_matrix(Y_test, yhat)
@@ -88,7 +90,9 @@ svm_cv.fit(X_train, Y_train)
 print("SVM\nTuned hyperparameters :(best parameters) ", svm_cv.best_params_)
 print("Accuracy :", svm_cv.best_score_)
 # Calculate the accuracy on the test data using the method score
-print("Test accuracy: ", svm_cv.score(X_test, Y_test))
+acc_svm_test_data = svm_cv.score(X_test, Y_test)
+print("Accuracy on test data :", acc_svm_test_data)
+
 # Let's look at the confusion matrix
 yhat = svm_cv.predict(X_test)
 plot_confusion_matrix(Y_test, yhat)
@@ -109,7 +113,9 @@ tree_cv.fit(X_train, Y_train)
 print("DecisionTree\nTuned hyperparameters :(best parameters) ", tree_cv.best_params_)
 print("Accuracy :", tree_cv.best_score_)
 # Calculate the accuracy on the test data using the method score
-print("Test accuracy: ", tree_cv.score(X_test, Y_test))
+acc_tree_test_data = tree_cv.score(X_test, Y_test)
+print("Accuracy on test data :", acc_tree_test_data)
+
 # Let's look at the confusion matrix
 yhat = tree_cv.predict(X_test)
 plot_confusion_matrix(Y_test, yhat)
@@ -126,7 +132,9 @@ knn_cv.fit(X_train, Y_train)
 print("KNN\nTuned hyperparameters :(best parameters) ", knn_cv.best_params_)
 print("Accuracy :", knn_cv.best_score_)
 # Calculate the accuracy on the test data using the method score
-print("Test accuracy: ", knn_cv.score(X_test, Y_test))
+acc_knn_test_data = knn_cv.score(X_test, Y_test)
+print("Accuracy on test data :", acc_knn_test_data)
+
 # Let's look at the confusion matrix
 yhat = knn_cv.predict(X_test)
 plot_confusion_matrix(Y_test, yhat)
@@ -135,3 +143,52 @@ plot_confusion_matrix(Y_test, yhat)
 index = np.argmax([logreg_cv.best_score_, svm_cv.best_score_, tree_cv.best_score_, knn_cv.best_score_])
 models = [logreg_cv, svm_cv, tree_cv, knn_cv]
 print('Best performing model is \n',models[index].best_estimator_)
+#
+index = np.argmax([logreg_cv.best_score_, svm_cv.best_score_, tree_cv.best_score_, knn_cv.best_score_])
+models = [logreg_cv, svm_cv, tree_cv, knn_cv]
+print('Best performing model is \n',models[index].best_estimator_)
+#
+
+methods = ['Logreg','Svm','Tree','Knn']
+accs_train = [logreg_cv.best_score_, svm_cv.best_score_, tree_cv.best_score_, knn_cv.best_score_]
+accs_test = [acc_logreg_test_data, acc_svm_test_data, acc_tree_test_data, acc_knn_test_data]
+
+dict_meth_accs = {}
+
+for i in range(len(methods)):
+    dict_meth_accs[methods[i]] = [accs_train[i], accs_test[i]]
+
+df = pd.DataFrame.from_dict(dict_meth_accs, orient='index')
+df.rename(columns={0: 'Accuracy Train', 1: 'Accuracy Test'}, inplace = True)
+
+df.head()
+#
+df_sorted_train = df.sort_values(by = ['Accuracy Train'], ascending=False) 
+df_sorted_train
+#
+df_sorted_test = df.sort_values(by = ['Accuracy Test'], ascending=False) 
+df_sorted_test
+#
+df_sorted_test[['Accuracy Test']]
+#
+acc_train_methods = df["Accuracy Train"]
+ax = acc_train_methods.plot(kind='bar', figsize=(10, 7))
+ax.set_xlabel("Methods")
+ax.set_ylabel("Train accuracy")
+ax.set_title("Methods performance on train data")
+#
+#We zoom in to see the results better
+acc_train_methods = df["Accuracy Train"]
+ax = acc_train_methods.plot(kind='bar', figsize=(10, 7))
+ax.set_xlabel("Methods")
+ax.set_ylabel("Train accuracy")
+ax.set_title("Methods performance on train data")
+ax.set_ylim(ymin=0.8, ymax=0.9)
+#
+acc_train_methods = df["Accuracy Test"]
+ax = acc_train_methods.plot(kind='bar', figsize=(10, 7))
+ax.set_xlabel("Methods")
+ax.set_ylabel("Test accuracy")
+ax.set_title("Methods performance on test data")
+#
+plt.show()
