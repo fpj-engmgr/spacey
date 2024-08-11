@@ -78,15 +78,14 @@ def getCoreData(data):
             LandingPad.append(core['landpad'])
 #
 spacex_url = SPACEX_API_URL + ENDPOINT_LAUNCHES
-#
 response = requests.get(spacex_url)
 # Check if the response is valid
 print('SpaceX sez : ', response.status_code)
 #
 static_json_url='https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-DS0321EN-SkillsNetwork/datasets/API_call_spacex_api.json'
 #
-response = requests.get(static_json_url).json()
 # use json_normalize meethod to convert the json result into a dataframe
+response = requests.get(static_json_url).json()
 data = pd.json_normalize(response)
 # get the head of the dataframe
 print('Head of the dataframe :\n',data.head())
