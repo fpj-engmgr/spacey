@@ -1,0 +1,34 @@
+Cover page
+
+Exec Summary
+- Briefly explain details
+- Standalone document
+
+Table of Contents
+
+Introduction
+- Nature of analysis
+- State the problem
+- State the question
+
+Methodology
+- Explain data sources
+- Outline the plan for collected data
+
+Results
+- Data collection/organization/analysis
+- Charts and graphs
+
+Discussion
+- Findings and implications
+- Engage the audience
+
+Conclusion
+- Reiterate the report findings 
+- Steps to be taken
+
+Appendix
+- Info that didn't fit, but might be interesting
+- References
+
+Best Practices for Presenting
